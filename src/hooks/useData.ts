@@ -16,8 +16,6 @@ const useData = <T>(
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
-  console.log(requestConfig);
-
   useEffect(
     () => {
       const controller = new AbortController();
