@@ -41,7 +41,7 @@ const App = () => {
           <ProjectCard
             to="/jamify"
             heading="Jamify - HTML/CSS"
-            description="Simulating a static website for a fictional cloud hosing company called Jamify. This project is almost pure html/css with only a tiny bit of js."
+            description="Simulating a static website for a fictional cloud hosting company called Jamify. This project is almost pure html/css with only a tiny bit of js."
             img={jamifyImg}
           />
           <ProjectCard

@@ -1,7 +1,11 @@
-import React from "react";
+import { useEffect } from "react";
 
 const JamifyApp = () => {
-  return <iframe src="../index.html"></iframe>;
+  useEffect(() => {
+    window.location.replace("https://jamie-hale-portfolio.netlify.app/");
+  }, []);
+
+  return null;
 };
 
 export default JamifyApp;
