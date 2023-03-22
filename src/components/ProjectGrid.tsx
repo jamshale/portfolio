@@ -31,7 +31,7 @@ const ProjectGrid = () => {
       <ProjectCard
         to="/bee-listener"
         heading="Bee Listener"
-        description="This is a personal project that accurately records sound and converts a certain frequency. Was used to detect bees and differentiate between species using a machine learning model."
+        description="This is a personal project that accurately records sound and converts a certain frequency. It was used to detect bees and differentiate between species using a machine learning model."
         img={frequencyImg}
       />
     </SimpleGrid>
