@@ -8,6 +8,7 @@ import GameHubApp from "./game-hub-app/GameHubApp";
 import JamifyApp from "./jamify/JamifyApp";
 import GeospatialApp from "./geospatial/GeospatialApp";
 import BeeApp from "./bee-listener/BeeApp";
+import HockeyHubApp from "./hockey-hub-app/HockeyHubApp";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/bee-listener",
     element: <BeeApp />,
+  },
+  {
+    path: "/hockey-hub",
+    element: <HockeyHubApp />,
   },
 ]);
 
