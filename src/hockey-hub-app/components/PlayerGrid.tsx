@@ -10,36 +10,41 @@ import useRoster from "../hooks/useRoster";
 import blankImg from "../assets/no-image-placeholder.webp";
 
 const PlayerGrid = () => {
-  const { data, error, isLoading } = useRoster();
+  const { playerDetails, error, isLoading } = useRoster();
 
   const getPlayerImgSrc = (id: number) => {
     return "https://cms.nhl.bamgrid.com/images/actionshots/" + id + ".jpg";
   };
 
+  const activePlayers = playerDetails.filter(
+    (player) => player.rosterStatus !== "I"
+  );
+
   return (
-    <SimpleGrid
-      columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
-      padding={2}
-      spacing={5}
-    >
-      {data.map((player) => (
+    <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} padding={2} spacing={5}>
+      {activePlayers.map((player) => (
         <Card
           borderRadius={10}
           overflow="hidden"
           boxShadow="1px 1px 1px #383838"
           background="#213672"
-          key={player.person.id}
+          key={player.id}
         >
           <Image
-            src={getPlayerImgSrc(player.person.id)}
+            src={getPlayerImgSrc(player.id)}
             height="250px"
             objectFit="cover"
+            fallbackSrc={blankImg}
           />
           <CardBody>
-            <HStack>
-              <Text>{player.jerseyNumber}</Text>
-              <Text>{player.person.fullName}</Text>
-              <Text>{player.position.abbreviation}</Text>
+            <HStack
+              justifyContent="space-between"
+              fontSize={"xl"}
+              fontWeight="bold"
+            >
+              <Text>{player.primaryNumber}</Text>
+              <Text>{player.fullName}</Text>
+              <Text>{player.primaryPosition.abbreviation}</Text>
             </HStack>
           </CardBody>
         </Card>

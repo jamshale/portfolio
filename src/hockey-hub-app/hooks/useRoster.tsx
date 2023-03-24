@@ -1,4 +1,4 @@
-import { CanceledError } from "axios";
+import { CanceledError, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 
@@ -19,12 +19,28 @@ interface SimplePlayerResponse {
   position: Position;
 }
 
+interface DetailedPlayer {
+  id: number;
+  fullName: string;
+  currentAge: number;
+  height: string;
+  weight: number;
+  rosterStatus: string;
+  shootsCatches: string;
+  primaryNumber: string;
+  primaryPosition: Position;
+}
+
 interface RosterResponse<SimplePlayerResponse> {
   roster: SimplePlayerResponse[];
 }
 
+interface DetailedPlayerResponse<DetailedPlayer> {
+  people: DetailedPlayer[];
+}
+
 const useRoster = () => {
-  const [data, setData] = useState<SimplePlayerResponse[]>([]);
+  const [playerDetails, setPlayerDetails] = useState<DetailedPlayer[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
@@ -36,7 +52,25 @@ const useRoster = () => {
     apiClient
       .get<RosterResponse<SimplePlayerResponse>>("/api/v1/teams/23/roster")
       .then((res) => {
-        setData(res.data.roster);
+        const playerDetailsPromises = new Array<
+          Promise<AxiosResponse<DetailedPlayerResponse<DetailedPlayer>>>
+        >();
+        res.data.roster.forEach((player) => {
+          playerDetailsPromises.push(
+            apiClient.get<DetailedPlayerResponse<DetailedPlayer>>(
+              "/api/v1/people/" + player.person.id
+            )
+          );
+        });
+
+        Promise.all<
+          Promise<AxiosResponse<DetailedPlayerResponse<DetailedPlayer>>>
+        >(playerDetailsPromises).then((res) => {
+          const playerDetails = new Array<DetailedPlayer>();
+          res.forEach((p) => playerDetails.push(p.data.people[0]));
+          setPlayerDetails(playerDetails);
+        });
+
         setLoading(false);
       })
       .catch((err) => {
@@ -48,7 +82,7 @@ const useRoster = () => {
     return () => controller.abort();
   }, []);
 
-  return { data, error, isLoading };
+  return { playerDetails, error, isLoading };
 };
 
 export default useRoster;
