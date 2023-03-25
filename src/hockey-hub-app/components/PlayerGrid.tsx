@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardBody,
   HStack,
@@ -42,9 +43,43 @@ const PlayerGrid = () => {
               fontSize={"xl"}
               fontWeight="bold"
             >
-              <Text>{player.primaryNumber}</Text>
-              <Text>{player.fullName}</Text>
-              <Text>{player.primaryPosition.abbreviation}</Text>
+              <Box
+                background="#2b482c"
+                borderStyle="solid"
+                borderWidth="0.5px"
+                boxShadow="0.5px 0.5px 0.5px black"
+                borderColor="#403f3f"
+                borderRadius="50%"
+                display={"flex"}
+                width={10}
+                height={10}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Text textShadow={"0.5px 0.5px 0.5px black"}>
+                  {player.primaryNumber}
+                </Text>
+              </Box>
+              <Text textShadow={"0.5px 0.5px 0.5px black"}>
+                {player.fullName}
+              </Text>
+              <Box
+                background="#2b482c"
+                borderStyle="solid"
+                borderWidth="0.5px"
+                boxShadow="0.5px 0.5px 0.5px black"
+                borderColor="#403f3f"
+                borderRadius="50%"
+                display={"flex"}
+                width={10}
+                height={10}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Text textShadow={"0.5px 0.5px 0.5px black"}>
+                  {player.primaryPosition.abbreviation}
+                </Text>
+              </Box>
             </HStack>
           </CardBody>
         </Card>
