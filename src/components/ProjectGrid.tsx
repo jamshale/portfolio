@@ -4,6 +4,7 @@ import gameHubImg from "../assests/game-hub.webp";
 import jamifyImg from "../assests/jamify.webp";
 import geospatialImg from "../assests/geospatial.webp";
 import frequencyImg from "../assests/frequency.jpg";
+import hockeyHubImg from "../assests/hockey-hub.jpg";
 
 const ProjectGrid = () => {
   return (
@@ -33,6 +34,18 @@ const ProjectGrid = () => {
         heading="Bee Listener"
         description="This is a personal project that accurately records sound and converts a certain frequency. It was used to detect bees and differentiate between species using a machine learning model."
         img={frequencyImg}
+      />
+      <ProjectCard
+        to="/bee-listener"
+        heading="Bee Listener"
+        description="This is a personal project that accurately records sound and converts a certain frequency. It was used to detect bees and differentiate between species using a machine learning model."
+        img={frequencyImg}
+      />
+      <ProjectCard
+        to="/hockey-hub"
+        heading="Canucks Fan Page"
+        description="Work in progress and just for fun fan page of the Vancouver Canucks using the free but poorly documented statsapi"
+        img={hockeyHubImg}
       />
     </SimpleGrid>
   );
