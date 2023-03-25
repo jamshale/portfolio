@@ -18,7 +18,7 @@ const PlayerGrid = () => {
   };
 
   const activePlayers = playerDetails.filter(
-    (player) => player.rosterStatus !== "I"
+    (player) => player.person.rosterStatus !== "I"
   );
 
   return (
@@ -29,10 +29,10 @@ const PlayerGrid = () => {
           overflow="hidden"
           boxShadow="1px 1px 1px #383838"
           background="#213672"
-          key={player.id}
+          key={player.person.id}
         >
           <Image
-            src={getPlayerImgSrc(player.id)}
+            src={getPlayerImgSrc(player.person.id)}
             height="250px"
             objectFit="cover"
             fallbackSrc={blankImg}
@@ -45,10 +45,7 @@ const PlayerGrid = () => {
             >
               <Box
                 background="#2b482c"
-                borderStyle="solid"
-                borderWidth="0.5px"
-                boxShadow="0.5px 0.5px 0.5px black"
-                borderColor="#403f3f"
+                boxShadow="0.5px 0.5px 0.5px #232323"
                 borderRadius="50%"
                 display={"flex"}
                 width={10}
@@ -56,19 +53,16 @@ const PlayerGrid = () => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <Text textShadow={"0.5px 0.5px 0.5px black"}>
-                  {player.primaryNumber}
+                <Text textShadow={"0.5px 0.5px 0.5px #232323"}>
+                  {player.person.primaryNumber}
                 </Text>
               </Box>
-              <Text textShadow={"0.5px 0.5px 0.5px black"}>
-                {player.fullName}
+              <Text textShadow={"0.5px 0.5px 0.5px #232323"}>
+                {player.person.fullName}
               </Text>
               <Box
                 background="#2b482c"
-                borderStyle="solid"
-                borderWidth="0.5px"
-                boxShadow="0.5px 0.5px 0.5px black"
-                borderColor="#403f3f"
+                boxShadow="0.5px 0.5px 0.5px #232323"
                 borderRadius="50%"
                 display={"flex"}
                 width={10}
@@ -77,7 +71,7 @@ const PlayerGrid = () => {
                 alignItems="center"
               >
                 <Text textShadow={"0.5px 0.5px 0.5px black"}>
-                  {player.primaryPosition.abbreviation}
+                  {player.person.primaryPosition.abbreviation}
                 </Text>
               </Box>
             </HStack>

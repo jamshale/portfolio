@@ -2,19 +2,13 @@ import { CanceledError, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 
-interface Person {
-  id: number;
-  fullName: string;
-  link: string;
-}
-
 interface Position {
   type: string;
   abbreviation: string;
 }
 
-interface SimplePlayerResponse {
-  person: Person;
+interface PlayerResponse {
+  person: DetailedPlayer;
   jerseyNumber: string;
   position: Position;
 }
@@ -31,16 +25,12 @@ interface DetailedPlayer {
   primaryPosition: Position;
 }
 
-interface RosterResponse<SimplePlayerResponse> {
-  roster: SimplePlayerResponse[];
-}
-
-interface DetailedPlayerResponse<DetailedPlayer> {
-  people: DetailedPlayer[];
+interface RosterResponse<PlayerResponse> {
+  roster: PlayerResponse[];
 }
 
 const useRoster = () => {
-  const [playerDetails, setPlayerDetails] = useState<DetailedPlayer[]>([]);
+  const [playerDetails, setPlayerDetails] = useState<PlayerResponse[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
@@ -50,27 +40,14 @@ const useRoster = () => {
     setLoading(true);
 
     apiClient
-      .get<RosterResponse<SimplePlayerResponse>>("/api/v1/teams/23/roster")
+      .get<RosterResponse<PlayerResponse>>("/api/v1/teams/23/roster", {
+        params: {
+          expand: "roster.person, person.names",
+          season: "20222023",
+        },
+      })
       .then((res) => {
-        const playerDetailsPromises = new Array<
-          Promise<AxiosResponse<DetailedPlayerResponse<DetailedPlayer>>>
-        >();
-        res.data.roster.forEach((player) => {
-          playerDetailsPromises.push(
-            apiClient.get<DetailedPlayerResponse<DetailedPlayer>>(
-              "/api/v1/people/" + player.person.id
-            )
-          );
-        });
-
-        Promise.all<
-          Promise<AxiosResponse<DetailedPlayerResponse<DetailedPlayer>>>
-        >(playerDetailsPromises).then((res) => {
-          const playerDetails = new Array<DetailedPlayer>();
-          res.forEach((p) => playerDetails.push(p.data.people[0]));
-          setPlayerDetails(playerDetails);
-        });
-
+        setPlayerDetails(res.data.roster);
         setLoading(false);
       })
       .catch((err) => {
